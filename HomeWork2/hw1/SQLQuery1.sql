@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS "Race";
 create table Race(
 RaceNum int identity (1,1) primary key,
 StartDate Datetime not null,
-EndDate Datetime not null
+EndDate Datetime
 )
 
 DROP TABLE IF EXISTS "FriendRace";
