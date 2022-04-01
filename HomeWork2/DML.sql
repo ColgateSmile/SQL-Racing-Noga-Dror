@@ -10,7 +10,7 @@ Delete From Ranks
 Delete From product 
 DBCC CHECKIDENT (Product,RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
 
-insert into Product values('HeadPhones',50)
+insert into Product values('Headphones',50)
 insert into Product values('Watch',150)
 insert into Product values('Pouch',25)
 insert into Product values('Charger',100)
@@ -81,7 +81,60 @@ from Ranks
 Delete From Race 
 DBCC CHECKIDENT (Race,RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
 
-insert into Race values(GETDATE(),GETDATE())-- WE need to change it to be Null  Tolerant !!!!!!!-----
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
+insert into Race values(GETDATE(), null)
 
 select *
 from Race
+
+Delete From FriendRace 
+DBCC CHECKIDENT (FriendRace, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
+
+insert into FriendRace values(1, 1, 1)
+insert into FriendRace values(2, 3, 5)
+insert into FriendRace values(3, 5, 2)
+
+select *
+from FriendRace 
+
+Delete From BestOfBestRace 
+DBCC CHECKIDENT (BestOfBestRace, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
+
+insert into BestOfBestRace values(4)
+insert into BestOfBestRace values(5)
+insert into BestOfBestRace values(6)
+
+select *
+from BestOfBestRace 
+
+Delete From TopThreeRace 
+DBCC CHECKIDENT (TopThreeRace, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
+
+insert into TopThreeRace values(7)
+insert into TopThreeRace values(8)
+insert into TopThreeRace values(9)
+
+select *
+from TopThreeRace 
+
+Delete From Medal 
+DBCC CHECKIDENT (Medal, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
+
+insert into Medal values('Brown', null)
+insert into Medal values('Bronze', null)
+insert into Medal values('Silver', null)
+insert into Medal values('Gold', null)
+insert into Medal values('Crystal', null)
+
+
+select *
+from Medal 
+
+
