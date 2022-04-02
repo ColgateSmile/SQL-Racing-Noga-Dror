@@ -1,6 +1,12 @@
-create database WinningPilots
-
 use WinningPilots
+
+
+
+DROP TABLE IF EXISTS "Country";
+create table Country(
+CountryID int identity (1,1) primary key,
+CountryName varchar(20) unique
+)
 
 DROP TABLE IF EXISTS "Pilot";
 create table Pilot(
@@ -112,11 +118,7 @@ primary key (PilotID, PurchaseDateTime, ProductID),
 Quantity int check (Quantity>0)
 )
 
-DROP TABLE IF EXISTS "Country";
-create table Country(
-CountryID int identity (1,1) primary key,
-CountryName varchar(20) unique
-)
+
 
 DROP TABLE IF EXISTS "PilotFriendsOfPilot";
 create table PilotFriendsOfPilot(

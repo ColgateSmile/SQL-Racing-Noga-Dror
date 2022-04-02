@@ -6,7 +6,13 @@ Delete From product
 Delete From Country 
 Delete From Purchase 
 Delete From Ranks 
+Delete From Race 
+Delete From FriendRace 
+Delete From BestOfBestRace 
+Delete From TopThreeRace 
 
+
+Delete From MedalHasRank
 
 
 Delete From product 
@@ -177,6 +183,7 @@ select *
 from PilotFriendsOfPilot 
 
 
+
 Delete From ProductInPurchase
 
 insert into ProductInPurchase values(1,2,'2022-04-01 12:04:37.087',3)
@@ -190,5 +197,41 @@ from ProductInPurchase
 
 
 
+Delete From PilotInFriendRace
+
+insert into PilotInFriendRace values(1,'2008-11-11 15:23:44','2019-11-11 11:12:01',1,5)
+insert into PilotInFriendRace values(2,'2008-11-11 10:12:25','2012-11-11 11:12:01',2,4)
+insert into PilotInFriendRace values(3,'2008-11-11 16:23:44','2014-11-11 11:12:01',3,3)
+insert into PilotInFriendRace values(4,'2008-17-17 17:23:33','2011-11-11 11:12:01',4,2)
+insert into PilotInFriendRace values(5,'2008-14-14 14:14:14','2018-11-11 11:12:01',5,1)
+
+select *
+from PilotInFriendRace
+
+
+
+Delete From PilotInBestOfBest
+
+insert into PilotInBestOfBest values(1,2,4,5,1,2)
+insert into PilotInBestOfBest values(1,2,4,5,2,3)
+insert into PilotInBestOfBest values(1,2,4,5,3,4)
+insert into PilotInBestOfBest values(1,2,4,5,4,5)
+insert into PilotInBestOfBest values(1,2,4,5,5,1)
+
+select *
+from PilotInBestOfBest
+
+
+Delete From PilotInTopThree
+
+insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
+insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
+insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
+insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
+insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
+
+
+select *
+from PilotInTopThree
 
 
