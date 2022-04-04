@@ -1,7 +1,5 @@
 use WinningPilots
 
-
-
 DROP TABLE IF EXISTS "Country";
 create table Country(
 CountryID int identity (1,1) primary key,
@@ -18,7 +16,7 @@ CreationDate date check (CreationDate<=getdate()) not null,
 Gender char(1) check (Gender in ('M','F','O')),
 Wins int,
 CountryID int,
-foreign key (CountryID) references Country(CountryID)
+foreign key (CountryID) references Country(CountryID) on delete cascade
 )
 
 DROP TABLE IF EXISTS "Race";
@@ -31,73 +29,74 @@ EndDate Datetime
 DROP TABLE IF EXISTS "FriendRace";
 create table FriendRace(
 FriendRaceNum int,
-foreign key (FriendRaceNum) references Race(RaceNum),
+foreign key (FriendRaceNum) references Race(RaceNum) on delete cascade,
 primary key (FriendRaceNum),
 CreatingPilotID int,
-foreign key (CreatingPilotID) references Pilot(PilotID),
+foreign key (CreatingPilotID) references Pilot(PilotID) on delete cascade,
 Position int not null check (position>=1 and position<=15)
 )
 
 DROP TABLE IF EXISTS "BestOfBestRace";
 create table BestOfBestRace(
 BestRaceNum int,
-foreign key (BestRaceNum) references Race(RaceNum),
+foreign key (BestRaceNum) references Race(RaceNum) on delete cascade,
 primary key (BestRaceNum)
 )
 
 DROP TABLE IF EXISTS "TopThreeRace";
 create table TopThreeRace(
 TopThreeRaceNum int,
-foreign key (TopThreeRaceNum) references Race(RaceNum),
+foreign key (TopThreeRaceNum) references Race(RaceNum) on delete cascade,
 primary key (TopThreeRaceNum)
 )
 
 DROP TABLE IF EXISTS "PilotInFriendRace";
 create table PilotInFriendRace(
-Position int not null unique check (position>=1 and position<=15),
-SendDate Datetime not null,
-RecievedDate Datetime,
 FriendRaceNum int,
 PilotID int,
-foreign key (FriendRaceNum) references FriendRace(FriendRaceNum),
-foreign key (PilotID) references Pilot(PilotID),
-primary key (PilotID, FriendRaceNum)
+foreign key (FriendRaceNum) references FriendRace(FriendRaceNum) on delete no action,
+foreign key (PilotID) references Pilot(PilotID) on delete cascade,
+primary key (PilotID, FriendRaceNum),
+Position int not null check (position>=1 and position<=15),
+SendDate Datetime not null,
+RecievedDate Datetime
 )
 
 DROP TABLE IF EXISTS "PilotInBestOfBest";
 create table PilotInBestOfBest(
-Position int not null unique check (position>=1 and position<=50),
-CrossingNum int,
-ControlGrade int,
-DeviationsFromRoute int,
 BestRaceNum int,
 PilotID int,
-foreign key (BestRaceNum) references BestOfBestRace(BestRaceNum),
-foreign key (PilotID) references Pilot(PilotID),
-primary key (PilotID, BestRaceNum)
+foreign key (BestRaceNum) references BestOfBestRace(BestRaceNum) on delete cascade,
+foreign key (PilotID) references Pilot(PilotID) on delete cascade,
+primary key (PilotID, BestRaceNum),
+Position int not null check (position>=1 and position<=50),
+CrossingNum int,
+ControlGrade int check (ControlGrade>=1 and ControlGrade<=100),
+DeviationsFromRoute int
 )
 
 DROP TABLE IF EXISTS "PilotInTopThree";
 create table PilotInTopThree(
-Position int not null unique check (position>=1 and position<=5),
-DepartureQualityGrade int,
-ArrivalQualityGrade int,
-FlightQualityGrade int,
-DeviationsFromRoute int,
-FinalGrade int,
 TopThreeRaceNum int,
 PilotID int,
-foreign key (TopThreeRaceNum) references TopThreeRace(TopThreeRaceNum),
-foreign key (PilotID) references Pilot(PilotID),
-primary key (PilotID, TopThreeRaceNum)
+foreign key (TopThreeRaceNum) references TopThreeRace(TopThreeRaceNum) on delete cascade,
+foreign key (PilotID) references Pilot(PilotID) on delete cascade,
+primary key (PilotID, TopThreeRaceNum),
+Position int not null check (position>=1 and position<=5),
+DepartureQualityGrade int check (DepartureQualityGrade>=1 and DepartureQualityGrade<=100),
+ArrivalQualityGrade int check (ArrivalQualityGrade>=1 and ArrivalQualityGrade<=100),
+FlightQualityGrade int check (FlightQualityGrade>=1 and FlightQualityGrade<=100),
+DeviationsFromRoute int,
+FinalGrade float
 )
 
 DROP TABLE IF EXISTS "Purchase";
 create table Purchase(
-PurchaseDateTime datetime check (PurchaseDateTime<=getdate()),
 PilotID int,
-foreign key (PilotID) references Pilot(PilotID),
-primary key (PilotID, PurchaseDateTime)
+foreign key (PilotID) references Pilot(PilotID) on delete cascade,
+PurchaseID int identity (1,1),
+primary key (PilotID, PurchaseID),
+PurchaseDateTime datetime check (PurchaseDateTime<=getdate())
 )
 
 DROP TABLE IF EXISTS "Product";
@@ -111,13 +110,12 @@ DROP TABLE IF EXISTS "ProductInPurchase";
 create table ProductInPurchase(
 ProductID int,
 PilotID int,
-PurchaseDateTime datetime,
+PurchaseID int,
 foreign key (ProductID) references Product(ProductID) on delete cascade,
-foreign key (PilotID, PurchaseDateTime) references Purchase(PilotID, PurchaseDateTime) on delete cascade,
-primary key (PilotID, PurchaseDateTime, ProductID),
+foreign key (PilotID, PurchaseID) references Purchase(PilotID, PurchaseID) on delete cascade,
+primary key (PilotID, PurchaseID, ProductID),
 Quantity int check (Quantity>0)
 )
-
 
 
 DROP TABLE IF EXISTS "PilotFriendsOfPilot";
@@ -147,8 +145,8 @@ DROP TABLE IF EXISTS "MedalHasRank";
 create table MedalHasRank(
 RankID int,
 MedalID int,
-foreign key (RankID) references Ranks(RankID),
-foreign key (MedalID) references Medal(MedalID),
+foreign key (RankID) references Ranks(RankID) on delete cascade,
+foreign key (MedalID) references Medal(MedalID) on delete cascade,
 primary key (RankID, MedalID)
 )
 

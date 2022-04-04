@@ -1,5 +1,5 @@
 
--- Question 2:
+-- Delete data from all tables:
 
 Delete From Pilot
 Delete From product 
@@ -7,16 +7,28 @@ Delete From Country
 Delete From Purchase 
 Delete From Ranks 
 Delete From Race 
+Delete From Medal
 Delete From FriendRace 
 Delete From BestOfBestRace 
 Delete From TopThreeRace 
-
-
 Delete From MedalHasRank
+Delete From PilotGotRankAndMedal
+Delete From PilotFriendsOfPilot
+Delete From ProductInPurchase
+Delete From PilotInFriendRace
+Delete From PilotInBestOfBest
+Delete From PilotInTopThree
+
+DBCC CHECKIDENT (Product,RESEED, 0) -- this is a way to resrtart the auto increment ID int
+DBCC CHECKIDENT (Purchase,RESEED, 0)
+DBCC CHECKIDENT (Country,RESEED, 0) 
+DBCC CHECKIDENT (Pilot,RESEED, 0)
+DBCC CHECKIDENT (Ranks,RESEED, 0)
+DBCC CHECKIDENT (Race,RESEED, 0)
+DBCC CHECKIDENT (Medal, RESEED, 0)
 
 
-Delete From product 
-DBCC CHECKIDENT (Product,RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
+-- Question 2:
 
 insert into Product values('Headphones',50)
 insert into Product values('Watch',150)
@@ -28,9 +40,6 @@ select *
 from Product
 
 
-Delete From Country 
-DBCC CHECKIDENT (Country,RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
-
 insert into Country values('Haifa')
 insert into Country values('Tel Aviv')
 insert into Country values('Jerusalem')
@@ -40,9 +49,6 @@ insert into Country values('Nesher')
 select *
 from Country
 
-
-Delete From Pilot 
-DBCC CHECKIDENT (Pilot,RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
 
 insert into Pilot values('Shalom','Mizrahi', '1995-10-05' ,'2022-03-18','M',0,1)
 insert into Pilot values('Lilach','Levi', '1990-09-18' ,'2022-03-18','F',2,2)
@@ -54,24 +60,15 @@ select *
 from Pilot
 
 
-Delete From Purchase 
-
-insert into Purchase values(GETDATE(),1)
-WAITFOR DELAY '00:00:02'; -- THE TIME IS OUR KEY VALUE, WE ADDED THE 2 SEC WAIT DELAY SO IT WILL BE DIFFERENT BETWEEN THE PURCHES
-insert into Purchase values(GETDATE(),2)
-WAITFOR DELAY '00:00:02';
-insert into Purchase values(GETDATE(),5)
-WAITFOR DELAY '00:00:02';
-insert into Purchase values(GETDATE(),3)
-WAITFOR DELAY '00:00:02';
-insert into Purchase values(GETDATE(),2)
+insert into Purchase values(1,GETDATE())
+insert into Purchase values(2,GETDATE())
+insert into Purchase values(2,GETDATE())
+insert into Purchase values(5,GETDATE())
+insert into Purchase values(3,GETDATE())
 
 select *
 from Purchase
 
-
-Delete From Ranks -- ranks is a Saved Word so we called it Ranks
-DBCC CHECKIDENT (Ranks,RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
 
 insert into Ranks values('Beginner',50)
 insert into Ranks values('Standard',200)
@@ -81,9 +78,6 @@ insert into Ranks values('Pro',1000)
 select *
 from Ranks
 
-
-Delete From Race 
-DBCC CHECKIDENT (Race,RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
 
 insert into Race values(GETDATE(), null)
 insert into Race values(GETDATE(), null)
@@ -99,9 +93,6 @@ select *
 from Race
 
 
-Delete From FriendRace 
-DBCC CHECKIDENT (FriendRace, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
-
 insert into FriendRace values(1, 1, 1)
 insert into FriendRace values(2, 3, 5)
 insert into FriendRace values(3, 5, 2)
@@ -109,9 +100,6 @@ insert into FriendRace values(3, 5, 2)
 select *
 from FriendRace 
 
-
-Delete From BestOfBestRace 
-DBCC CHECKIDENT (BestOfBestRace, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
 
 insert into BestOfBestRace values(4)
 insert into BestOfBestRace values(5)
@@ -121,9 +109,6 @@ select *
 from BestOfBestRace 
 
 
-Delete From TopThreeRace 
-DBCC CHECKIDENT (TopThreeRace, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
-
 insert into TopThreeRace values(7)
 insert into TopThreeRace values(8)
 insert into TopThreeRace values(9)
@@ -131,9 +116,6 @@ insert into TopThreeRace values(9)
 select *
 from TopThreeRace 
 
-
-Delete From Medal 
-DBCC CHECKIDENT (Medal, RESEED, 0) -- this is a way to resrtart the autoIncrecment ID int
 
 insert into Medal values('Brown', null)
 insert into Medal values('Bronze', null)
@@ -147,8 +129,6 @@ from Medal
 
 --Question 3:
 
-Delete From MedalHasRank
-
 insert into MedalHasRank values(1,1)
 insert into MedalHasRank values(2,4)
 insert into MedalHasRank values(2,3)
@@ -158,8 +138,6 @@ insert into MedalHasRank values(4,2)
 select *
 from MedalHasRank 
 
-
-Delete From PilotGotRankAndMedal
 
 insert into PilotGotRankAndMedal values(1,2,4,'2019-08-20','N')
 insert into PilotGotRankAndMedal values(2,1,1,'2022-10-29','N')
@@ -171,8 +149,6 @@ select *
 from PilotGotRankAndMedal 
 
 
-Delete From PilotFriendsOfPilot
-
 insert into PilotFriendsOfPilot values(1,2)
 insert into PilotFriendsOfPilot values(2,4)
 insert into PilotFriendsOfPilot values(3,5)
@@ -183,55 +159,41 @@ select *
 from PilotFriendsOfPilot 
 
 
-
-Delete From ProductInPurchase
-
-insert into ProductInPurchase values(1,2,'2022-04-01 12:04:37.087',3)
-insert into ProductInPurchase values(4,2,'2022-04-01 12:04:37.087',1)
-insert into ProductInPurchase values(3,5,'2022-04-01 12:04:39.107',2)
-insert into ProductInPurchase values(5,5,'2022-04-01 12:04:39.107',4)
-insert into ProductInPurchase values(3,1,'2022-04-01 12:04:35.070',1)
+insert into ProductInPurchase values(1,2,2,3)
+insert into ProductInPurchase values(4,2,2,1)
+insert into ProductInPurchase values(3,5,4,2)
+insert into ProductInPurchase values(5,5,4,4)
+insert into ProductInPurchase values(3,1,1,3)
 
 select *
 from ProductInPurchase
 
 
-
-Delete From PilotInFriendRace
-
-insert into PilotInFriendRace values(1,'2008-11-11 15:23:44','2019-11-11 11:12:01',1,5)
-insert into PilotInFriendRace values(2,'2008-11-11 10:12:25','2012-11-11 11:12:01',2,4)
-insert into PilotInFriendRace values(3,'2008-11-11 16:23:44','2014-11-11 11:12:01',3,3)
-insert into PilotInFriendRace values(4,'2008-17-17 17:23:33','2011-11-11 11:12:01',4,2)
-insert into PilotInFriendRace values(5,'2008-14-14 14:14:14','2018-11-11 11:12:01',5,1)
+insert into PilotInFriendRace values(1,5,1,'2021-11-11 15:23:44','2021-11-16 11:12:00')
+insert into PilotInFriendRace values(2,4,2,'2021-05-04 10:12:25','2021-05-11 16:29:00')
+insert into PilotInFriendRace values(3,3,3,'2020-10-09 16:23:44','2020-10-23 20:20:06')
+insert into PilotInFriendRace values(2,2,4,'2020-12-17 17:23:33','2020-12-29 10:30:00')
+insert into PilotInFriendRace values(3,1,5,'2019-04-14 14:14:14','2019-04-15 09:15:00')
 
 select *
 from PilotInFriendRace
 
 
-
-Delete From PilotInBestOfBest
-
-insert into PilotInBestOfBest values(1,2,4,5,1,2)
-insert into PilotInBestOfBest values(1,2,4,5,2,3)
-insert into PilotInBestOfBest values(1,2,4,5,3,4)
-insert into PilotInBestOfBest values(1,2,4,5,4,5)
-insert into PilotInBestOfBest values(1,2,4,5,5,1)
+insert into PilotInBestOfBest values(4,2,1,2,70,6)
+insert into PilotInBestOfBest values(6,3,20,3,90,3)
+insert into PilotInBestOfBest values(6,4,5,6,80,2)
+insert into PilotInBestOfBest values(4,5,17,1,65,5)
+insert into PilotInBestOfBest values(5,1,39,0,85,5)
 
 select *
 from PilotInBestOfBest
 
 
-Delete From PilotInTopThree
-
-insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
-insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
-insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
-insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
-insert into PilotInTopThree values(1,2,3,4,5,6,2,3)
-
+insert into PilotInTopThree values(7,3,1,55,45,45,5,48.33)
+insert into PilotInTopThree values(8,2,2,69,84,78,6,77)
+insert into PilotInTopThree values(9,1,3,65,31,5,3,33.66)
+insert into PilotInTopThree values(9,4,2,100,99,98,1,99)
+insert into PilotInTopThree values(8,5,3,97,80,85,2,87.33)
 
 select *
 from PilotInTopThree
-
-
